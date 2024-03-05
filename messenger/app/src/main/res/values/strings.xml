@@ -19,10 +19,10 @@
     <string name="log_in">Log in</string>
     <string name="create_new_account">Create new account</string>
     <string name="no_account_found_create_a_new_account">No account found. Create a new account?</string>
-    <String name="password">Password</String>
-    <string name="password">Password</string>
     <string name="mobile_number_or_email">Mobile number or email</string>
     <string name="create_a_password_with_at_least_6_letters_or_numbers_it_should_be_something_others_can_t_guess">Create a password with at least 6 letters or numbers. It should be something others can’t guess.</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="create">Create</string>
+    <string name="password">Password</string>
+    <string name="your_name">Your name</string>
 </resources>

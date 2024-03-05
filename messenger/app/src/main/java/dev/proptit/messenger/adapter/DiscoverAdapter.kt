@@ -16,8 +16,8 @@ class DiscoverAdapter(
     inner class DiscoverViewHolder(private val binding: DiscoverItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(person: User) {
-            Glide.with(context).load(person.avatar).centerCrop().into(binding.ivAvatar)
-            binding.tvName.text = person.userName
+            Glide.with(context).load(person.avatarUri).centerCrop().into(binding.ivAvatar)
+            binding.tvName.text = person.name
         }
     }
 

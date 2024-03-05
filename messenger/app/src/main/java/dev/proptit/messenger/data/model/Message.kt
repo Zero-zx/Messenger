@@ -9,6 +9,6 @@ data class Message(
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
     @ColumnInfo("sender_Id") val senderId:Int,
     @ColumnInfo("receiver_Id")val receiverId:Int,
-    @ColumnInfo("message")val message:String = ""
-//    val time: Long = 0L
+    @ColumnInfo("message")val message:String,
+    val time: Long
 )

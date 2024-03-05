@@ -2,6 +2,7 @@ package dev.proptit.messenger
 
 import android.app.Application
 import dev.proptit.messenger.data.MessengerDatabase
+import dev.proptit.messenger.data.remote.UserDataSource
 import dev.proptit.messenger.data.repository.MessageRepository
 import dev.proptit.messenger.data.repository.UserRepository
 
@@ -17,7 +18,8 @@ class MainApplication : Application() {
         UserRepository(
             MessengerDatabase.getInstance(
                 this@MainApplication
-            ).userDao()
+            ).userDao(),
+            UserDataSource()
         )
     }
 

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import dev.proptit.messenger.data.DAO.MessageDao
-import dev.proptit.messenger.data.DAO.UserDao
+import dev.proptit.messenger.data.dao.MessageDao
+import dev.proptit.messenger.data.dao.UserDao
 import dev.proptit.messenger.data.model.Message
 import dev.proptit.messenger.data.model.User
 

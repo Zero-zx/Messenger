@@ -10,13 +10,10 @@ import dev.proptit.messenger.ui.loginScreen.LoginActivity
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-//    private val userRepository = UserRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        userRepository.readUsers()
 
         binding.llSplash.apply {
             alpha = 0f

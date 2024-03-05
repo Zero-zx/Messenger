@@ -27,7 +27,7 @@ class PeopleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAllUser().observe(viewLifecycleOwner, Observer {
+        viewModel.allUser.observe(viewLifecycleOwner, Observer {
             binding.rvPeople.adapter = PeopleAdapter(
                 it
             )

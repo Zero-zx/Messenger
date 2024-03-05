@@ -1,6 +1,5 @@
 package dev.proptit.messenger.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +13,8 @@ class PeopleAdapter(
 
     inner class PeopleViewHolder(private val binding: PeopleItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(person: User){
-            Glide.with(itemView.context).load(person.avatar).centerCrop().into(binding.ivAvatar)
-            binding.tvName.text = person.userName
+            Glide.with(itemView.context).load(person.avatarUri).centerCrop().into(binding.ivAvatar)
+            binding.tvName.text = person.name
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleViewHolder {

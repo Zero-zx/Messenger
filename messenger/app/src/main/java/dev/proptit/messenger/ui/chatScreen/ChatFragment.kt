@@ -20,14 +20,17 @@ import dev.proptit.messenger.data.model.Message
 import dev.proptit.messenger.databinding.FragmentChatBinding
 import dev.proptit.messenger.ui.MainViewModel
 import dev.proptit.messenger.setup.Keys
+import dev.proptit.messenger.setup.PrefManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
+    private lateinit var prefManager: PrefManager
     private val viewModel: MainViewModel by activityViewModels { MainViewModel.Factory }
-    val adapter = MessageAdapter()
-
+    private lateinit var adapter: MessageAdapter
     private var state = EMOJI_STATE
 
     companion object {
@@ -60,26 +63,26 @@ class ChatFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.receiverId.observe(viewLifecycleOwner, Observer { value ->
-                    Log.d("test", "value: $value")
                     viewModel.getUserById(value).observe(viewLifecycleOwner, Observer { user ->
                         Glide
                             .with(requireContext())
-                            .load(user.avatar)
+                            .load(user.avatarUri)
                             .into(binding.ivAvatar)
-                        binding.tvName.text = user.userName
-                        adapter.setAvatar(user.avatar)
-                        viewModel.allMessages.observe(viewLifecycleOwner, Observer { messages ->
-
-                            adapter.setMessageList(messages.filter {
-                                it.receiverId == Keys.MY_ID && it.senderId == user.id || it.receiverId == user.id && it.senderId == Keys.MY_ID
-                            })
-                        })
+                        binding.tvName.text = user.name
+                        adapter.setAvatar(user.avatarUri)
                     })
 
 
+
+                        viewModel.getMessageByContactId(value,prefManager.get(Keys.MY_ID,-1)).observe(viewLifecycleOwner, Observer {
+                            adapter.setMessageList(it)
+                        })
+//                        adapter.setMessageList(viewModel.getMessageByContactId(value, prefManager.get(Keys.MY_ID,-1)))
                 })
+
             }
         }
+
     }
 
     private fun onClickListener() {
@@ -102,19 +105,20 @@ class ChatFragment : Fragment() {
 
         binding.ivLike.setOnClickListener {
             if (state == COMPOSE_STATE) {
-                viewModel.receiverId.value?.let { it1 ->
-                    viewModel.senderId.value?.let { it2 ->
-                        Message(
-                            senderId = it2,
-                            receiverId = it1,
-                            message = binding.etComposeMessage.text.toString()
-                        )
-                    }
-                }?.let { it2 ->
-                    viewModel.insertMessage(
-                        it2
+
+                val receiverID = viewModel.receiverId.value
+                val senderID = viewModel.senderId.value
+
+                if(receiverID != null && senderID != null){
+                    val message = Message(
+                        senderId = senderID,
+                        receiverId = receiverID,
+                        message = binding.etComposeMessage.text.toString(),
+                        time = System.currentTimeMillis()
                     )
+                    viewModel.sendMessage(message)
                 }
+
                 binding.etComposeMessage.apply {
                     clearComposingText()
                     clearFocus()
@@ -125,9 +129,10 @@ class ChatFragment : Fragment() {
     }
 
     private fun initComponents() {
+        viewModel.fetchDataFromRemote()
+        prefManager = PrefManager(requireContext())
+        adapter = MessageAdapter(prefManager.get(Keys.MY_ID, -1))
         binding.rvMessage.adapter = adapter
-
-
     }
 
 

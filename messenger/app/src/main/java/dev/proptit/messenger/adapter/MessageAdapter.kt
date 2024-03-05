@@ -12,6 +12,7 @@ import dev.proptit.messenger.databinding.SentMessageItemBinding
 import dev.proptit.messenger.setup.Keys
 
 class MessageAdapter(
+    private val myId: Int
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var messageList = listOf<Message>()
@@ -79,7 +80,7 @@ class MessageAdapter(
     override fun getItemViewType(position: Int): Int {
         val message = messageList[position]
         Log.d("Message", message.toString())
-        return if (message.senderId == Keys.MY_ID) SENT_MASSAGE
+        return if (message.senderId == myId) SENT_MASSAGE
         else RECEIVED_MASSAGE
     }
 

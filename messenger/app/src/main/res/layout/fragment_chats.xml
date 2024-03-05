@@ -20,12 +20,14 @@
             app:cardCornerRadius="25dp">
 
             <ImageView
+                android:id="@+id/ivAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/avt_1" />
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
